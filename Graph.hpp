@@ -14,24 +14,27 @@ namespace ariel {
         EdgeType edgeType;
         EdgeNegativity edgeNegativity;
 
-        bool isValidGraph(const std::vector<std::vector<int>>& adjacencyMatrix) const;
-        bool isSymmetricMatrix(const std::vector<std::vector<int>>& matrix) const;
+        void clearGraph() ;
+        [[nodiscard]] static bool isValidGraph(const std::vector<std::vector<int>>& adjacencyMatrix) ;
+        [[nodiscard]] static bool isSymmetricMatrix(const std::vector<std::vector<int>>& matrix) ;
 
     public:
         Graph();
+
+        // graph methods
         void loadGraph(const std::vector<std::vector<int>>& matrix);
         void printGraph() const;
-        [[nodiscard]] bool isDirectedGraph() const;
-        [[nodiscard]] size_t getNumVertices() const;
-        [[nodiscard]] std::vector<std::vector<int>> getAdjacencyMatrix() const;
+        bool isEmpty() const;
+
+        // getters
+        [[nodiscard]] size_t V() const;
         [[nodiscard]] GraphType getGraphType() const;
         [[nodiscard]] EdgeType getEdgeType() const;
         [[nodiscard]] EdgeNegativity getEdgeNegativity() const;
         [[nodiscard]] int getEdgeWeight(size_t u, size_t v) const;
         [[nodiscard]] std::vector<size_t> getNeighbors(size_t vertex) const;
+        [[nodiscard]] Graph getReversedGraph() const;
 
-    private:
-        void clearGraph() ;
 
     };
 }

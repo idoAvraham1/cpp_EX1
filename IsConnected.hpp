@@ -1,6 +1,7 @@
 #ifndef IS_CONNECTED_HPP
 #define IS_CONNECTED_HPP
 
+#include "DetectCycle.hpp"
 #include "Graph.hpp"
 #include <string>
 #include <vector>
@@ -14,7 +15,7 @@ namespace ariel {
     private:
         static bool isConnectedDirected(const Graph& g);
         static bool isConnectedUndirected(const Graph& g);
-        static bool dfs(const Graph& g, std::vector<bool>& visited , size_t start);
+        static void dfs(const Graph& g, std::vector<bool>& visited , size_t start);
 
     };
 }

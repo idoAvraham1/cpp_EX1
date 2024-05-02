@@ -4,10 +4,17 @@
 #include <stdexcept>
 
 namespace ariel {
-
+    /**
+    * Constructs an empty graph with default attributes.
+    */
     Graph::Graph() : numVertices(0), numEdges(0), graphType(GraphType::UNDIRECTED),
                      edgeType(EdgeType::UNWEIGHTED), edgeNegativity(EdgeNegativity::NONE) {}
-
+    /**
+    * Loads a graph from an adjacency matrix, setting properties such as number of vertices, number of edges,
+    * graph type, edge type, and edge negativity based on the loaded data.
+    * @param matrix The adjacency matrix representing the graph.
+    * @throws std::invalid_argument if the matrix is not square.
+     */
     void Graph::loadGraph(const std::vector<std::vector<int>>& matrix) {
         if (!isValidGraph(matrix)) {
             throw std::invalid_argument("Invalid graph: Graph is not valid.");
@@ -40,6 +47,10 @@ namespace ariel {
             this->graphType = GraphType::DIRECTED;
         }
     }
+
+    /**
+     * Clears the graph data, resetting it to an empty state.
+     */
     void Graph::clearGraph() {
         this->numVertices = 0;
         this->numEdges = 0;
@@ -49,7 +60,7 @@ namespace ariel {
         this->edgeNegativity = EdgeNegativity::NONE;
     }
 
-    bool Graph::isValidGraph(const std::vector<std::vector<int>>& adjacencyMatrix) const {
+    bool Graph::isValidGraph(const std::vector<std::vector<int>>& adjacencyMatrix) {
         for(const auto& row : adjacencyMatrix) {
             if (row.size() != adjacencyMatrix.size()) {
                 return false;
@@ -58,7 +69,7 @@ namespace ariel {
         return true;
     }
 
-    bool Graph::isSymmetricMatrix(const std::vector<std::vector<int>>& matrix) const {
+    bool Graph::isSymmetricMatrix(const std::vector<std::vector<int>>& matrix) {
         size_t n = matrix.size();
         for (size_t i = 0; i < n; ++i) {
             for (size_t j = 0; j < n; ++j) {
@@ -69,6 +80,12 @@ namespace ariel {
         }
         return true;
     }
+
+    /**
+    * Retrieves the neighbors of a given vertex.
+    * @param vertex The vertex to retrieve neighbors for.
+    * @return A vector containing the indices of neighboring vertices.
+    */
     std::vector<size_t> Graph::getNeighbors(size_t vertex) const {
         std::vector<size_t> neighbors;
 
@@ -87,10 +104,7 @@ namespace ariel {
         std::cout << "Graph with " << numVertices << " vertices and " << numEdges << " edges." << std::endl;
     }
 
-    bool Graph::isDirectedGraph() const {
-        return (graphType == GraphType::DIRECTED);
-    }
-
+    
     GraphType Graph::getGraphType() const {
         return graphType;
     }
@@ -103,16 +117,36 @@ namespace ariel {
         return edgeNegativity;
     }
 
-    size_t Graph::getNumVertices() const {
+    size_t Graph::V() const {
         return numVertices;
-    }
-
-    std::vector<std::vector<int>> Graph::getAdjacencyMatrix() const {
-        return adjacencyMatrix;
     }
 
     int Graph::getEdgeWeight(size_t u, size_t v) const {
         return adjacencyMatrix[u][v];
     }
 
+    Graph Graph::getReversedGraph() const {
+        // Create a new graph
+        Graph reversedGraph;
+
+        // Reverse the adjacency matrix
+        std::vector<std::vector<int>> reversedAdjacencyMatrix(numVertices, std::vector<int>(numVertices, 0));
+
+        for (size_t i = 0; i < numVertices; ++i) {
+            for (size_t j = 0; j < numVertices; ++j) {
+                if (adjacencyMatrix[i][j] != 0) {
+                    reversedAdjacencyMatrix[j][i] = adjacencyMatrix[i][j];
+                }
+            }
+        }
+
+        // Load the reversed adjacency matrix into the reversed graph
+        reversedGraph.loadGraph(reversedAdjacencyMatrix);
+
+        return reversedGraph;
+    }
+
+    bool Graph::isEmpty() const {
+        return numVertices<=0;
+    }
 } // namespace ariel

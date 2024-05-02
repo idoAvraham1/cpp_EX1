@@ -5,14 +5,15 @@
 #include <string>
 #include <vector>
 
+
 namespace ariel {
     class DetectCycle {
     public:
-        static std::string Execute(const Graph& g);
-
+        static std::string Execute(const Graph &g);
     private:
-        static std::string detectCycleWithNegativeEdges(const Graph& g);
-        static std::string detectCycleNoNegativeEdges(const Graph& g);
+        static std::string detectCycle(const Graph& g);
+        static std::string constructCycleString(const std::vector<int> &cycle);
+        static bool detectCycleDfs(const Graph &g, int v,int parent, std::vector<bool> &visited, std::vector<int> &path);
     };
 }
 
