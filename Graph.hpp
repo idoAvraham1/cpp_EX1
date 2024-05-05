@@ -4,6 +4,7 @@
 #include <vector>
 #include "GraphProperties.hpp"
 #include <cstddef>
+#include <limits>
 namespace ariel {
     class Graph {
     private:
@@ -34,8 +35,7 @@ namespace ariel {
         [[nodiscard]] int getEdgeWeight(size_t u, size_t v) const;
         [[nodiscard]] std::vector<size_t> getNeighbors(size_t vertex) const;
         [[nodiscard]] Graph getReversedGraph() const;
-
-
+        [[nodiscard]] Graph addVertexWithEdges() const;
     };
 }
 

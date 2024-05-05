@@ -18,7 +18,7 @@ namespace ariel {
         for (size_t v = 0; v < g.V(); ++v) {
             if (colors[v] == -1) {
                 if (!colorGraphBFS(g, colors, v)) {
-                    return "Graph is not bipartite ";
+                    return "Graph is not bipartite";
                 }
             }
         }

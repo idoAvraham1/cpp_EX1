@@ -1,6 +1,7 @@
 
 #include <vector>
 #include <sstream>
+#include <xmath.h>
 #include "DetectCycle.hpp"
 
 namespace ariel {
@@ -10,11 +11,16 @@ namespace ariel {
     * @param g The graph to detect cycles in.
     * @return A string describing the detected cycle, or a message indicating no cycle was found.
     */
-    std::string DetectCycle::Execute(const Graph &g) {
+    std::string DetectCycle::Execute(const Graph &g, bool onlyNegativeCycle) {
         // empty graph
-        if(g.isEmpty())
+        if (g.isEmpty())
             return "Graph is empty";
+
+        if (onlyNegativeCycle)
+            return detectNegativeCycle(g);
+
         return detectCycle(g);
+
     }
 
     /**
@@ -30,7 +36,7 @@ namespace ariel {
         // Iterate through all vertices and perform DFS to detect cycles
         for (int v = 0; v < g.V(); ++v) {
             if (!visited[v]) {
-                if (detectCycleDfs(g, v,-1, visited, path))
+                if (detectCycleDfs(g, v, -1, visited, path))
                     return constructCycleString(path);
             }
         }
@@ -48,7 +54,8 @@ namespace ariel {
        * @param path A vector to store the current path during traversal.
        * @return True if a cycle is found, false otherwise.
        */
-    bool DetectCycle::detectCycleDfs(const Graph &g, int v, int parent, std::vector<bool> &visited, std::vector<int> &path) {
+    bool
+    DetectCycle::detectCycleDfs(const Graph &g, int v, int parent, std::vector<bool> &visited, std::vector<int> &path) {
         visited[v] = true;
         path.push_back(v);
 
@@ -58,13 +65,13 @@ namespace ariel {
             if (weight != 0) {
 
                 // For undirected graphs, ignore the edge to the parent
-                if(g.getGraphType()==GraphType::UNDIRECTED){
+                if (g.getGraphType() == GraphType::UNDIRECTED) {
                     if (neighbor == parent)
                         continue;
                 }
                 // If the neighbor is already in the path, a cycle is found
                 bool inPath = false;
-                for (int i : path) {
+                for (int i: path) {
                     if (i == neighbor) {
                         inPath = true;
                         break;
@@ -75,7 +82,7 @@ namespace ariel {
                     return true;
                 }
                 // If the neighbor has not been visited yet, explore it recursively
-                if (!visited[neighbor] && detectCycleDfs(g, neighbor,v ,visited, path))
+                if (!visited[neighbor] && detectCycleDfs(g, neighbor, v, visited, path))
                     return true;
             }
         }
@@ -98,4 +105,21 @@ namespace ariel {
         return ss.str();
     }
 
+
+    std::string DetectCycle::detectNegativeCycle(const Graph &g) {
+
+        // get a new graph with extra vertex with outgoing edge to each vertex
+       Graph new_Graph=g.addVertexWithEdges();
+
+       // use bellman ford to find the shortest path to each vertex
+       for(size_t v=0;v<g.V();v++){
+           std::string ans= ShortestPath::Execute(new_Graph,g.V(),v);
+           // negative cycle detected
+           if(ans.find("Negative cycle detected:") != std::string::npos )
+                return ans;
+       }
+       return "No negative cycle in the graph";
+    }
+
 }
+

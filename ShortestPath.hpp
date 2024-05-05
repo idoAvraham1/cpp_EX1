@@ -27,6 +27,9 @@ namespace ariel {
 
         // Helper method to construct the path from the vector of predecessors
         static std::string constructPath(const std::vector<size_t>& predecessors, size_t source, size_t dest);
+
+        // Helper method to construct a cycle from the vector of predecessors
+        static std::string constructCycle(const std::vector<size_t> &predecessors, size_t start);
     };
 }
 

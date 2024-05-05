@@ -15,7 +15,7 @@
       */
      std::string ShortestPath::Execute(const ariel::Graph &g, size_t source, size_t dest) {
          if( ! isValidInput(g, source, dest))
-             return "inValid input for finding shortest path";
+             return "Invalid input for finding shortest path";
 
          switch (g.getEdgeNegativity()) {
              case EdgeNegativity::NEGATIVE:
@@ -37,7 +37,7 @@
          }
      }
 
-
+     // finding the shortest path from source to dest using dijkstra's algorithm
      std::string ShortestPath::dijkstra(const Graph &g, size_t source, size_t dest) {
          // init the predecessors array to infinity to indicate no pred
          std::vector<size_t> predecessors(g.V(), std::numeric_limits<size_t>::max());
@@ -71,54 +71,60 @@
              }
          }
          if (predecessors[dest] == std::numeric_limits<size_t>::max())
-             return "there is no path from " + std::to_string(source) + "to" + std::to_string(dest);
+             return "There is no path from " + std::to_string(source) + " to " + std::to_string(dest);
 
          std::string path = constructPath(predecessors, source, dest);
          return "Shortest path from " + std::to_string(source) + " to " + std::to_string(dest) + " is: " + path;
 
      }
 
+     // finding the shortest path from source to dest using bellman-ford's algorithm
      std::string ShortestPath::bellmanFord(const Graph &g, size_t source, size_t dest) {
-          // init the pred with infinity to indicate there is no pred
-          std::vector<size_t> predecessors(g.V(), std::numeric_limits<size_t>::max());
-          // init the distances with infinity
-          std::vector<int> dist(g.V() , std::numeric_limits<int>::max());
-          dist[source]=0;
+         // Initialize predecessors with a special value (-1) to indicate no predecessor
+         std::vector<size_t> predecessors(g.V(), size_t(-1));
+         // Initialize distances with infinity
+         std::vector<int> dist(g.V(), std::numeric_limits<int>::max());
+         dist[source] = 0;
 
-          //repeat number of vertices-1  times:
-          for(int i=0; i< g.V() - 1; i++){
-              // iterate throw each edge in the graph
-              for(size_t u=0; u< g.V(); u++){
-                  for(size_t v=0; v< g.V(); v++){
-                      // perform relax on the edge u,v
-                      int weight_uv= g.getEdgeWeight(u,v);
-                      // if the edge u,v exist && dist[u] has been updated at least once
-                      if(dist[v]> weight_uv+dist[u] && weight_uv != 0 && dist[u] != std::numeric_limits<int>::max()){
-                          dist[v]=weight_uv+dist[u];
-                          predecessors[v]=u;
-                      }
-                  }
-              }
-          }
-
-         // Check for negative cycles
-         for (size_t u = 0; u < g.V(); ++u) {
-             for (size_t v = 0; v < g.V(); ++v) {
-                 int weight_uv = g.getEdgeWeight(u, v);
-                 if (weight_uv != 0 && dist[u] != std::numeric_limits<int>::max() && dist[u] + weight_uv < dist[v]) {
-                     // Negative cycle detected
-                     return "Negative cycle detected in the graph";
+         // Iterating |V| - 1 times
+         for (int i = 0; i < g.V() - 1; i++) {
+             // Iterate through each edge in the graph
+             for (size_t u = 0; u < g.V(); u++) {
+                 for (size_t v = 0; v < g.V(); v++) {
+                     // Perform relaxation on the edge u,v
+                     int weight_uv = g.getEdgeWeight(u, v);
+                     // Relax the edge if it exists and a shorter path is found
+                     if ( weight_uv != 0 && dist[v] > weight_uv + dist[u]) {
+                         dist[v] = weight_uv + dist[u];
+                         predecessors[v] = u;
+                     }
                  }
              }
          }
-         if (predecessors[dest] == std::numeric_limits<size_t>::max())
-             return "there is no path from " + std::to_string(source) + "to" + std::to_string(dest);
+         // Check for negative cycles according to the graph type
+         for (size_t u = 0; u < g.V(); ++u) {
+             for (size_t v = 0; v < g.V(); ++v) {
+                 int weight_uv = g.getEdgeWeight(u, v);
+                 if (weight_uv != 0 && dist[u] + weight_uv < dist[v] ) {
+                        // ignore negative cycle from a father to son in undirected graph
+                        if(g.getGraphType()== GraphType::UNDIRECTED && predecessors[u]==v)
+                            continue;
+                     // Negative cycle detected
+                     std::string cycle = constructCycle(predecessors, u);
+                     return "Negative cycle detected: " + cycle;
+                 }
+             }
+         }
+         // If destination is not reachable from source
+         if (dist[dest] == std::numeric_limits<size_t>::max())
+             return "There is no path from " + std::to_string(source) + " to " + std::to_string(dest);
 
 
          std::string path = constructPath(predecessors, source, dest);
          return "Shortest path from " + std::to_string(source) + " to " + std::to_string(dest) + " is: " + path;
      }
 
+     // finding the shortest path from source to dest using bds
      std::string ShortestPath::bfs(const Graph &g, size_t source, size_t dest) {
          // Array of the parent of each node
          std::vector<size_t> parents(g.V(), std::numeric_limits<size_t>::max());
@@ -157,7 +163,7 @@
          return "Shortest path from " + std::to_string(source) + " to " + std::to_string(dest) + " is: " + path;
      }
 
-
+     // Helper method to construct a path from the vector of predecessors
      std::string ShortestPath::constructPath(const std::vector<size_t> &predecessors, size_t source, size_t dest) {
          std::stack<size_t> pathStack;
          size_t current = dest;
@@ -197,6 +203,18 @@
          }
 
          return true; // Valid input
+     }
+
+     // Helper method to construct a cycle from the vector of predecessors
+     std::string ShortestPath::constructCycle(const std::vector<size_t> &predecessors, size_t start) {
+         std::string cycle = std::to_string(start) + " -> ";
+         size_t curr = predecessors[start];
+         while (curr != start) {
+             cycle += std::to_string(curr) + " -> ";
+             curr = predecessors[curr];
+         }
+         cycle += std::to_string(start);
+         return cycle;
      }
 
 

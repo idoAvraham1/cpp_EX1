@@ -1,5 +1,6 @@
 #include <stdexcept>
 #include "IsConnected.hpp"
+#include <iostream>
 
 namespace ariel {
 
@@ -62,6 +63,11 @@ namespace ariel {
 
         // Step 1: Run DFS from a random vertex and mark all visited vertices in vis1
         dfs(g, vis1, 0);
+        // Check if all vertices are visited in vis1
+        for (bool visited : vis1) {
+            if (!visited)
+                return false; // Not strongly connected
+        }
 
         // Step 2: Reverse the direction of all edges in the graph
         ariel::Graph gReversed = g.getReversedGraph();
@@ -69,10 +75,11 @@ namespace ariel {
         // Step 3: Run DFS from the same random vertex in the reversed graph and mark all visited vertices in vis2
         dfs(gReversed, vis2, 0);
 
-        // Step 4: Check if any vertex is not visited in both vis1 and vis2
-        for(size_t v = 0; v < g.V(); ++v)
-            if(!vis1[v] && !vis2[v])
-                return false;
+        // Step 4: Check if any vertex is not visited in vis2
+        for (bool visited : vis2) {
+            if (!visited)
+                return false; // Not strongly connected
+        }
         return true;
     }
 

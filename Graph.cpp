@@ -146,6 +146,39 @@ namespace ariel {
         return reversedGraph;
     }
 
+    Graph Graph::addVertexWithEdges() const {
+        // Create a new graph
+        Graph modifiedGraph;
+
+        // Increase the size of the adjacency matrix to accommodate the new vertex
+        size_t newSize = numVertices + 1;
+        std::vector<std::vector<int>> modifiedAdjacencyMatrix(newSize, std::vector<int>(newSize, 0));
+
+        // Copy existing adjacency matrix to modified adjacency matrix
+        for (size_t i = 0; i < numVertices; ++i) {
+            for (size_t j = 0; j < numVertices; ++j) {
+                modifiedAdjacencyMatrix[i][j] = adjacencyMatrix[i][j];
+            }
+        }
+
+        // assign max value possible for each new outgoing edge
+        int outgoingEdgeWeight = std::numeric_limits<int>::max();
+
+        // Update the modified adjacency matrix to represent outgoing edges from the new vertex to each existing vertex
+        for (size_t i = 0; i < newSize; ++i) {
+            modifiedAdjacencyMatrix[i][newSize-1]=outgoingEdgeWeight;
+            modifiedAdjacencyMatrix[newSize-1][i]=outgoingEdgeWeight;
+        }
+        modifiedAdjacencyMatrix[newSize-1][newSize-1]=0;
+
+        // Load the modified adjacency matrix into the modified graph
+        modifiedGraph.loadGraph(modifiedAdjacencyMatrix);
+
+
+        return modifiedGraph;
+    }
+
+
     bool Graph::isEmpty() const {
         return numVertices<=0;
     }

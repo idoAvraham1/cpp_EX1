@@ -17,4 +17,7 @@ add_executable(cpp_ex1 main.cpp
         DetectCycle.hpp
         IsConnected.cpp
         IsConnected.hpp
+        doctest.h
+        Test.cpp
+        TestCounter.cpp
 )

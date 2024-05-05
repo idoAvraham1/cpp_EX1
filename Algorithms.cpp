@@ -17,11 +17,13 @@ namespace ariel {
     }
 
     std::string Algorithms::isContainsCycle(const Graph &g) {
-        return DetectCycle::Execute(g);
+        bool ANY_CYCLE= false;
+        return DetectCycle::Execute(g,ANY_CYCLE);
     }
 
     std::string Algorithms::negativeCycle(const Graph &g) {
-        return DetectCycle::Execute(g);
+        bool ONLY_NEGATIVE_CYCLE=true;
+        return DetectCycle::Execute(g,ONLY_NEGATIVE_CYCLE);
     }
 
 
