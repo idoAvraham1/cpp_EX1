@@ -110,8 +110,7 @@
                         if(g.getGraphType()== GraphType::UNDIRECTED && predecessors[u]==v)
                             continue;
                      // Negative cycle detected
-                     std::string cycle = constructCycle(predecessors, u);
-                     return "Negative cycle detected: " + cycle;
+                     return "Negative cycle detected in the graph";
                  }
              }
          }

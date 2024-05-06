@@ -12,21 +12,21 @@ using ariel::Algorithms;
 #include <vector>
 using namespace std;
 
-
+/*
 int main()
 {
     ariel::Graph g;
     vector<vector<int>> graph7 = {
-            {0, 1, 0, 0, 0},
-            {0, 0, -5, 0, 0},
-            {2, 0, 0, 0, 0},
+            {0, 1, 2, 0, 0},
+            {1, 0, -5, 0, 0},
+            {2, -5, 0, 0, 0},
             {0, 0, 0, 0, 2},
-            {0, 0, 0, 0, 0}
+            {0, 0, 0, 2, 0}
     };
     g.loadGraph(graph7);
-    //cout<<Algorithms::isContainsCycle(g)<<endl;
-    cout<<Algorithms::negativeCycle(g)<<endl; ;
+    cout<<Algorithms::negativeCycle(g)<<endl;
 }
+ */
 
 
 

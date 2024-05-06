@@ -164,19 +164,28 @@ namespace ariel {
         // assign max value possible for each new outgoing edge
         int outgoingEdgeWeight = std::numeric_limits<int>::max();
 
-        // Update the modified adjacency matrix to represent outgoing edges from the new vertex to each existing vertex
-        for (size_t i = 0; i < newSize; ++i) {
-            modifiedAdjacencyMatrix[i][newSize-1]=outgoingEdgeWeight;
-            modifiedAdjacencyMatrix[newSize-1][i]=outgoingEdgeWeight;
+        // For directed graphs, add outgoing edges from the new vertex to each existing vertex
+        for (size_t i = 0; i < numVertices; ++i) {
+            modifiedAdjacencyMatrix[newSize - 1][i] = outgoingEdgeWeight;
         }
-        modifiedAdjacencyMatrix[newSize-1][newSize-1]=0;
+
+        // For undirected graphs, connect the new vertex to every existing vertex
+        if (graphType == GraphType::UNDIRECTED) {
+            for (size_t i = 0; i < numVertices; ++i) {
+                modifiedAdjacencyMatrix[i][newSize - 1] = outgoingEdgeWeight;
+            }
+        }
+
+        // Set the weight of the self-loop of the new vertex to 0
+        modifiedAdjacencyMatrix[newSize - 1][newSize - 1] = 0;
 
         // Load the modified adjacency matrix into the modified graph
         modifiedGraph.loadGraph(modifiedAdjacencyMatrix);
 
-
         return modifiedGraph;
     }
+
+
 
 
     bool Graph::isEmpty() const {

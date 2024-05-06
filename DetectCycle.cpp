@@ -1,6 +1,7 @@
 
 #include <vector>
 #include <sstream>
+#include "iostream"
 #include <xmath.h>
 #include "DetectCycle.hpp"
 
@@ -106,20 +107,118 @@ namespace ariel {
     }
 
 
+
     std::string DetectCycle::detectNegativeCycle(const Graph &g) {
+        // distances matrix
+        std::vector<std::vector<int>> dist(g.V(), std::vector<int>(g.V(), INT_MAX));
+        // predecessors matrix
+        std::vector<std::vector<int>> pred(g.V(), std::vector<int>(g.V(), -1));
 
-        // get a new graph with extra vertex with outgoing edge to each vertex
-       Graph new_Graph=g.addVertexWithEdges();
 
-       // use bellman ford to find the shortest path to each vertex
-       for(size_t v=0;v<g.V();v++){
-           std::string ans= ShortestPath::Execute(new_Graph,g.V(),v);
-           // negative cycle detected
-           if(ans.find("Negative cycle detected:") != std::string::npos )
-                return ans;
-       }
-       return "No negative cycle in the graph";
+        initDistAndPred(g,dist,pred);
+
+
+        // Floyd-Warshall algorithm
+        for (int k = 0; k < g.V(); k++) {
+            for (int i = 0; i < g.V(); i++) {
+                for (int j = 0; j < g.V(); j++) {
+                    if (dist[i][k] != INT_MAX && dist[k][j] != INT_MAX && dist[i][j] > dist[i][k] + dist[k][j]) {
+                        dist[i][j] = dist[i][k] + dist[k][j];
+                        // Update predecessor
+                        pred[i][j] = pred[k][j];
+                    }
+                }
+            }
+        }
+        return hasNegativeCycle(g,dist,pred);
     }
 
+    void DetectCycle::initDistAndPred(const Graph& g,std::vector<std::vector<int>>& dist, std::vector<std::vector<int>>& pred) {
+        // init the dist and pred array according to the graph type
+        switch (g.getGraphType()) {
+            case GraphType::DIRECTED: {
+                for (int i = 0; i < g.V(); i++) {
+                    for (int j = 0; j < g.V(); j++) {
+
+                        if (g.getEdgeWeight(i, j) != 0) {
+                            dist[i][j] = g.getEdgeWeight(i, j);
+                            pred[i][j] = i;
+                        }
+                    }
+                }
+                break;
+            }
+            case GraphType::UNDIRECTED:
+                for (int i = 0; i < g.V(); i++) {
+                    for (int j = i + 1; j < g.V(); j++) {
+                        if (i == j) {
+                            dist[i][j] = 0;
+                        }
+                        if (g.getEdgeWeight(i, j) != 0) {
+                            dist[i][j] = g.getEdgeWeight(i, j);
+                            dist[j][i] = g.getEdgeWeight(i, j); // For undirected graph
+                            pred[i][j] = i;
+                            pred[j][i] = j;
+                        }
+                    }
+                }
+                break;
+        }
+    }
+
+
+    std::string DetectCycle::hasNegativeCycle(const Graph& g,std::vector<std::vector<int>>& dist, std::vector<std::vector<int>>& pred) {
+        switch (g.getGraphType()) {
+            case GraphType::DIRECTED: {
+                for (int i = 0; i < g.V(); i++) {
+                    if (dist[i][i] < 0) {   // Negative cycle found, reconstruct the cycle
+                        std::stringstream cycle;
+                        int cur = i;
+                        do {
+                            cycle << cur << " -> ";
+                            cur = pred[cur][cur];
+                        } while (cur != i);   //
+                        cycle << i; // Close the cycle
+                        return "Negative cycle found: " + cycle.str();
+                    }
+                }
+                break;
+            }
+            case GraphType::UNDIRECTED: {
+                for (int i = 0; i < g.V(); i++) {
+                    if (dist[i][i] < 0) {   // Negative cycle found, reconstruct the cycle
+                        std::stringstream cycle;
+                        int cur = i;
+                        std::vector<bool> visited(g.V(), false); // To mark visited nodes
+                        do {
+                            visited[cur] = true;
+                            cycle << cur << " -> ";
+                            cur = pred[cur][cur]; // Move to the predecessor of cur
+                        } while (cur != i && !visited[cur]);   // Continue until we reach the starting node or a visited node
+                        cycle << i; // Close the cycle
+                        return "Negative cycle found: " + cycle.str();
+                    }
+                }
+                break;
+            }
+        }
+        return "No negative cycle in the graph";
+    }
+
+
+
 }
+    /*
+     *    // get a new graph with extra vertex with outgoing edge to each vertex
+          Graph new_Graph = g.addVertexWithEdges();
+
+              // use bellman ford to find the shortest path to each vertex ( Execute invoke bellman ford)
+              std::string ans = ShortestPath::Execute(new_Graph,g.V(), 0);
+              // negative cycle detected
+              if (ans.find("Negative cycle detected:") != std::string::npos)
+                  return ans;
+          return "No negative cycle in the graph";
+     *
+     *
+     */
 
