@@ -103,6 +103,12 @@ build CMakeFiles/cpp_ex1.dir/TestCounter.cpp.obj: CXX_COMPILER__cpp_ex1_unscanne
   OBJECT_DIR = CMakeFiles\cpp_ex1.dir
   OBJECT_FILE_DIR = CMakeFiles\cpp_ex1.dir
 
+build CMakeFiles/cpp_ex1.dir/DetectNegativeCycle.cpp.obj: CXX_COMPILER__cpp_ex1_unscanned_Debug C$:/Users/admin/CLionProjects/cpp_ex1/DetectNegativeCycle.cpp || cmake_object_order_depends_target_cpp_ex1
+  DEP_FILE = CMakeFiles\cpp_ex1.dir\DetectNegativeCycle.cpp.obj.d
+  FLAGS = -g -fdiagnostics-color=always
+  OBJECT_DIR = CMakeFiles\cpp_ex1.dir
+  OBJECT_FILE_DIR = CMakeFiles\cpp_ex1.dir
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target cpp_ex1
@@ -111,7 +117,7 @@ build CMakeFiles/cpp_ex1.dir/TestCounter.cpp.obj: CXX_COMPILER__cpp_ex1_unscanne
 #############################################
 # Link the executable cpp_ex1.exe
 
-build cpp_ex1.exe: CXX_EXECUTABLE_LINKER__cpp_ex1_Debug CMakeFiles/cpp_ex1.dir/main.cpp.obj CMakeFiles/cpp_ex1.dir/Graph.cpp.obj CMakeFiles/cpp_ex1.dir/Algorithms.cpp.obj CMakeFiles/cpp_ex1.dir/ShortestPath.cpp.obj CMakeFiles/cpp_ex1.dir/IsBipartite.cpp.obj CMakeFiles/cpp_ex1.dir/DetectCycle.cpp.obj CMakeFiles/cpp_ex1.dir/IsConnected.cpp.obj CMakeFiles/cpp_ex1.dir/Test.cpp.obj CMakeFiles/cpp_ex1.dir/TestCounter.cpp.obj
+build cpp_ex1.exe: CXX_EXECUTABLE_LINKER__cpp_ex1_Debug CMakeFiles/cpp_ex1.dir/main.cpp.obj CMakeFiles/cpp_ex1.dir/Graph.cpp.obj CMakeFiles/cpp_ex1.dir/Algorithms.cpp.obj CMakeFiles/cpp_ex1.dir/ShortestPath.cpp.obj CMakeFiles/cpp_ex1.dir/IsBipartite.cpp.obj CMakeFiles/cpp_ex1.dir/DetectCycle.cpp.obj CMakeFiles/cpp_ex1.dir/IsConnected.cpp.obj CMakeFiles/cpp_ex1.dir/Test.cpp.obj CMakeFiles/cpp_ex1.dir/TestCounter.cpp.obj CMakeFiles/cpp_ex1.dir/DetectNegativeCycle.cpp.obj
   FLAGS = -g
   LINK_LIBRARIES = -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\cpp_ex1.dir

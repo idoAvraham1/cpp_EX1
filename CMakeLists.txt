@@ -20,4 +20,7 @@ add_executable(cpp_ex1 main.cpp
         doctest.h
         Test.cpp
         TestCounter.cpp
+        DetectNegativeCycle.cpp
+        DetectNegativeCycle.hpp
+        DetectNegativeCycle.hpp
 )

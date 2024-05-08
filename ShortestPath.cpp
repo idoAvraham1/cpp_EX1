@@ -80,8 +80,11 @@
 
      // finding the shortest path from source to dest using bellman-ford's algorithm
      std::string ShortestPath::bellmanFord(const Graph &g, size_t source, size_t dest) {
+         if(g.getGraphType() == GraphType::UNDIRECTED )
+              return "Can't find Shortest path in undirected graph with negative weights!";
+
          // Initialize predecessors with a special value (-1) to indicate no predecessor
-         std::vector<size_t> predecessors(g.V(), size_t(-1));
+         std::vector<size_t > predecessors(g.V(), size_t(-1));
          // Initialize distances with infinity
          std::vector<int> dist(g.V(), std::numeric_limits<int>::max());
          dist[source] = 0;
@@ -94,7 +97,7 @@
                      // Perform relaxation on the edge u,v
                      int weight_uv = g.getEdgeWeight(u, v);
                      // Relax the edge if it exists and a shorter path is found
-                     if ( weight_uv != 0 && dist[v] > weight_uv + dist[u]) {
+                     if (weight_uv != 0 && dist[v] > weight_uv + dist[u] && dist[u] != std::numeric_limits<int>::max()) {
                          dist[v] = weight_uv + dist[u];
                          predecessors[v] = u;
                      }
@@ -106,11 +109,9 @@
              for (size_t v = 0; v < g.V(); ++v) {
                  int weight_uv = g.getEdgeWeight(u, v);
                  if (weight_uv != 0 && dist[u] + weight_uv < dist[v] ) {
-                        // ignore negative cycle from a father to son in undirected graph
-                        if(g.getGraphType()== GraphType::UNDIRECTED && predecessors[u]==v)
-                            continue;
                      // Negative cycle detected
                      return "Negative cycle detected in the graph";
+
                  }
              }
          }
@@ -122,7 +123,6 @@
          std::string path = constructPath(predecessors, source, dest);
          return "Shortest path from " + std::to_string(source) + " to " + std::to_string(dest) + " is: " + path;
      }
-
      // finding the shortest path from source to dest using bds
      std::string ShortestPath::bfs(const Graph &g, size_t source, size_t dest) {
          // Array of the parent of each node
@@ -204,17 +204,6 @@
          return true; // Valid input
      }
 
-     // Helper method to construct a cycle from the vector of predecessors
-     std::string ShortestPath::constructCycle(const std::vector<size_t> &predecessors, size_t start) {
-         std::string cycle = std::to_string(start) + " -> ";
-         size_t curr = predecessors[start];
-         while (curr != start) {
-             cycle += std::to_string(curr) + " -> ";
-             curr = predecessors[curr];
-         }
-         cycle += std::to_string(start);
-         return cycle;
-     }
 
 
  }

@@ -162,20 +162,12 @@ namespace ariel {
         }
 
         // assign max value possible for each new outgoing edge
-        int outgoingEdgeWeight = std::numeric_limits<int>::max();
+        int outgoingEdgeWeight = 10000;
 
         // For directed graphs, add outgoing edges from the new vertex to each existing vertex
         for (size_t i = 0; i < numVertices; ++i) {
             modifiedAdjacencyMatrix[newSize - 1][i] = outgoingEdgeWeight;
         }
-
-        // For undirected graphs, connect the new vertex to every existing vertex
-        if (graphType == GraphType::UNDIRECTED) {
-            for (size_t i = 0; i < numVertices; ++i) {
-                modifiedAdjacencyMatrix[i][newSize - 1] = outgoingEdgeWeight;
-            }
-        }
-
         // Set the weight of the self-loop of the new vertex to 0
         modifiedAdjacencyMatrix[newSize - 1][newSize - 1] = 0;
 

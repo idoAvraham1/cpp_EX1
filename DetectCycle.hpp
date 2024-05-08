@@ -10,15 +10,14 @@
 namespace ariel {
     class DetectCycle {
     public:
-        static std::string Execute(const Graph &g, bool onlyNegativeCycle);
+        static std::string Execute(const Graph &g);
     private:
         static std::string detectCycle(const Graph& g);
         static bool detectCycleDfs(const Graph &g, int v,int parent, std::vector<bool> &visited, std::vector<int> &path);
         static std::string detectNegativeCycle(const Graph& g);
         static std::string constructCycleString(const std::vector<int> &path);
 
-        static std::string
-        hasNegativeCycle(const Graph &g, std::vector<std::vector<int>> &dist, std::vector<std::vector<int>> &pred);
+        static std::string hasNegativeCycle(const Graph &g, std::vector<std::vector<int>> &dist, std::vector<std::vector<int>> &pred);
 
         static void initDistAndPred(const Graph &g, std::vector<std::vector<int>> &dist, std::vector<std::vector<int>> &pred);
     };

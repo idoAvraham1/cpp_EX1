@@ -6,6 +6,7 @@
 #include "DetectCycle.hpp"
 #include "IsBipartite.hpp"
 #include "IsConnected.hpp"
+#include "DetectNegativeCycle.hpp"
 #include <string>
 
 namespace ariel {
