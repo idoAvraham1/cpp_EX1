@@ -108,7 +108,7 @@
          for (size_t u = 0; u < g.V(); ++u) {
              for (size_t v = 0; v < g.V(); ++v) {
                  int weight_uv = g.getEdgeWeight(u, v);
-                 if (weight_uv != 0 && dist[u] + weight_uv < dist[v] ) {
+                 if (weight_uv != 0 &&  dist[u] != std::numeric_limits<int>::max()  && dist[u] + weight_uv < dist[v] ) {
                      // Negative cycle detected
                      return "Negative cycle detected in the graph";
 
