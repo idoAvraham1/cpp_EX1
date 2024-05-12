@@ -42,7 +42,7 @@ The project consists of seven main classes and one header file for graph propert
 **Detailed Description of Algorithms:**
 Each concrete algorithm class provides a public method called execute, responsible for executing the algorithm according to the graph properties and checking for valid input. Here's a brief overview of each algorithm:
 
-  * *ShortestPath*: Finds the path from a source vertex to a destination vertex using Dijkstra's algorithm for non-negative weighted graphs, BFS for unweighted graphs, and Bellman-Ford for graphs with negative weights (not applicable to undirected graphs).
+  * *ShortestPath*: Finds the path from a source vertex to a destination vertex using Dijkstra's algorithm for non-negative weighted graphs, BFS for unweighted graphs, and Bellman-Ford for graphs with negative weights.
 
   * *isBipartite*: Determines if a graph can be bipartite and, if so, finds the actual partitions of the set of vertices into two disjoint sets.
 
@@ -50,5 +50,5 @@ Each concrete algorithm class provides a public method called execute, responsib
 
   * *isConnected:* Determines if a graph is connected, considering strongly connected graphs for directed graphs.
 
-  * *DetectNegativeCycle:* Identifies negative cycles in the graph using Bellman-Ford's logic (applicable only to directed graphs).
+  * *DetectNegativeCycle:* Identifies negative cycles in the graph using Bellman-Ford's logic.
 
