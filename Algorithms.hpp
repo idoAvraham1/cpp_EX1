@@ -1,3 +1,5 @@
+//written by Ido Avraham : 208699181
+//EMAIL: idoavraham086@gmail.com
 #ifndef ALGORITHMS_HPP
 #define ALGORITHMS_HPP
 

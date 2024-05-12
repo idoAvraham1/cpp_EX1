@@ -1,3 +1,5 @@
+//written by Ido Avraham : 208699181
+//EMAIL: idoavraham086@gmail.com
 #ifndef IS_BIPARTITE_HPP
 #define IS_BIPARTITE_HPP
 

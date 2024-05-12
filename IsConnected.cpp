@@ -1,6 +1,7 @@
-#include <stdexcept>
+//written by Ido Avraham : 208699181
+//EMAIL: idoavraham086@gmail.com
+
 #include "IsConnected.hpp"
-#include <iostream>
 
 namespace ariel {
 
@@ -33,6 +34,7 @@ namespace ariel {
 
     /**
       * Determines whether the undirected graph is connected using Depth-First Search (DFS).
+      * general strategy is to perform a dfs, if each vertex was visited, graph is connected
       * @param g The undirected graph to check for connectivity.
       * @return True if the undirected graph is connected, false otherwise.
       */
@@ -52,6 +54,7 @@ namespace ariel {
 
     /**
      * Determines whether the directed graph is strongly connected using two DFS traversals.
+     * general strategy is to determine weather the graph contain only one connection component
      * @param g The directed graph to check for strong connectivity.
      * @return True if the directed graph is strongly connected, false otherwise.
      *  took the idea from : https://www.geeksforgeeks.org/check-if-a-directed-graph-is-connected-or-not/

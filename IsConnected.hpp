@@ -1,12 +1,11 @@
+//written by Ido Avraham : 208699181
+//EMAIL: idoavraham086@gmail.com
 #ifndef IS_CONNECTED_HPP
 #define IS_CONNECTED_HPP
 
 #include "DetectCycle.hpp"
 #include "Graph.hpp"
-#include <string>
-#include <vector>
-#include <queue>
-#include <unordered_set>
+using namespace std;
 
 namespace ariel {
     class IsConnected {

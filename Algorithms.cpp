@@ -1,10 +1,6 @@
+//written by Ido Avraham : 208699181
+//EMAIL: idoavraham086@gmail.com
 #include "Algorithms.hpp"
-
-
-#include <stdexcept>
-
-#include "GraphProperties.hpp"
-
 
 namespace ariel {
 

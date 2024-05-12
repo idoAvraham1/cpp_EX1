@@ -1,8 +1,5 @@
-
-#include <vector>
-#include <sstream>
-#include "iostream"
-#include <xmath.h>
+//written by Ido Avraham : 208699181
+//EMAIL: idoavraham086@gmail.com
 #include "DetectCycle.hpp"
 
 namespace ariel {
@@ -22,6 +19,7 @@ namespace ariel {
 
     /**
     * Detects cycles in the given graph using Depth-First Search (DFS).
+    * the general strategy is to seek for a back edge.
     * @param g The graph to detect cycles in.
     * @return A string describing the detected cycle, or a message indicating no cycle was found.
     */
@@ -51,8 +49,7 @@ namespace ariel {
        * @param path A vector to store the current path during traversal.
        * @return True if a cycle is found, false otherwise.
        */
-    bool
-    DetectCycle::detectCycleDfs(const Graph &g, int v, int parent, std::vector<bool> &visited, std::vector<int> &path) {
+    bool DetectCycle::detectCycleDfs(const Graph &g, int v, int parent, std::vector<bool> &visited, std::vector<int> &path) {
         visited[v] = true;
         path.push_back(v);
 
@@ -88,8 +85,6 @@ namespace ariel {
         path.pop_back();
         return false;
     }
-
-
 
 
     // Constructs a string representation of the detected cycle.

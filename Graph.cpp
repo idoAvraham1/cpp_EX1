@@ -1,9 +1,8 @@
+//written by Ido Avraham : 208699181
+//EMAIL: idoavraham086@gmail.com
 #include "Graph.hpp"
-
-#include <iostream>
-#include <stdexcept>
-
 namespace ariel {
+
     /**
     * Constructs an empty graph with default attributes.
     */
@@ -81,25 +80,6 @@ namespace ariel {
         return true;
     }
 
-    /**
-    * Retrieves the neighbors of a given vertex.
-    * @param vertex The vertex to retrieve neighbors for.
-    * @return A vector containing the indices of neighboring vertices.
-    */
-    std::vector<size_t> Graph::getNeighbors(size_t vertex) const {
-        std::vector<size_t> neighbors;
-
-        // Check the corresponding row or column in the adjacency matrix
-        for (size_t i = 0; i < numVertices; ++i) {
-            if (adjacencyMatrix[vertex][i] != 0) {
-                // If there is a non-zero edge weight, add the vertex to the neighbors list
-                neighbors.push_back(i);
-            }
-        }
-
-        return neighbors;
-    }
-
     void Graph::printGraph() const {
         std::cout << "Graph with " << numVertices << " vertices and " << numEdges << " edges." << std::endl;
     }
@@ -146,6 +126,14 @@ namespace ariel {
         return reversedGraph;
     }
 
+    /**
+     * @brief Adds a new vertex to the graph with outgoing edges to existing vertices.
+     *
+     * This method creates a new graph with an additional vertex compared to the original graph.
+     * Outgoing edges are added from the new vertex to each existing vertex in the original graph.
+     *
+     * @return A new graph with the added vertex and outgoing edges.
+       */
     Graph Graph::addVertexWithEdges() const {
         // Create a new graph
         Graph modifiedGraph;
@@ -168,6 +156,8 @@ namespace ariel {
         for (size_t i = 0; i < numVertices; ++i) {
             modifiedAdjacencyMatrix[newSize - 1][i] = outgoingEdgeWeight;
         }
+
+
         // Set the weight of the self-loop of the new vertex to 0
         modifiedAdjacencyMatrix[newSize - 1][newSize - 1] = 0;
 
@@ -176,8 +166,6 @@ namespace ariel {
 
         return modifiedGraph;
     }
-
-
 
 
     bool Graph::isEmpty() const {

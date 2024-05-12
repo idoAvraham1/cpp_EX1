@@ -1,3 +1,5 @@
+//written by Ido Avraham : 208699181
+//EMAIL: idoavraham086@gmail.com
 #ifndef GRAPH_HPP
 #define GRAPH_HPP
 
@@ -5,6 +7,13 @@
 #include "GraphProperties.hpp"
 #include <cstddef>
 #include <limits>
+#include <iostream>
+#include <stdexcept>
+
+/**
+ * A class to represent a graph with adjacency matrix
+ */
+
 namespace ariel {
     class Graph {
     private:
@@ -33,7 +42,6 @@ namespace ariel {
         [[nodiscard]] EdgeType getEdgeType() const;
         [[nodiscard]] EdgeNegativity getEdgeNegativity() const;
         [[nodiscard]] int getEdgeWeight(size_t u, size_t v) const;
-        [[nodiscard]] std::vector<size_t> getNeighbors(size_t vertex) const;
         [[nodiscard]] Graph getReversedGraph() const;
         [[nodiscard]] Graph addVertexWithEdges() const;
     };

@@ -1,4 +1,5 @@
-
+//written by Ido Avraham : 208699181
+//EMAIL: idoavraham086@gmail.com
 #include "IsBipartite.hpp"
 namespace ariel {
 
@@ -28,6 +29,7 @@ namespace ariel {
 
     /**
      * Colors the graph vertices using Breadth-First Search (BFS) traversal to determine bipartiteness.
+     * the idea was took from TA session in course "Algorithms 1"
      * @param g The graph to be colored.
      * @param colors A vector to store the color of each vertex.
      * @param start The starting vertex for BFS traversal.
