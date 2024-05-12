@@ -26,10 +26,10 @@ namespace ariel {
     std::string DetectCycle::detectCycle(const Graph &g) {
         // Initialize vectors to track visited vertices and recursion stack
         std::vector<bool> visited(g.V(), false);
-        std::vector<int> path; // To store the current path
+        std::vector<size_t> path; // To store the current path
 
         // Iterate through all vertices and perform DFS to detect cycles
-        for (int v = 0; v < g.V(); ++v) {
+        for (size_t v = 0; v < g.V(); ++v) {
             if (!visited[v]) {
                 if (detectCycleDfs(g, v, -1, visited, path))
                     return constructCycleString(path);
@@ -49,12 +49,12 @@ namespace ariel {
        * @param path A vector to store the current path during traversal.
        * @return True if a cycle is found, false otherwise.
        */
-    bool DetectCycle::detectCycleDfs(const Graph &g, int v, int parent, std::vector<bool> &visited, std::vector<int> &path) {
+    bool DetectCycle::detectCycleDfs(const Graph &g, size_t v, int parent, std::vector<bool> &visited, std::vector<size_t> &path) {
         visited[v] = true;
         path.push_back(v);
 
         // Explore all neighbors of vertex v
-        for (int neighbor = 0; neighbor < g.V(); ++neighbor) {
+        for (size_t neighbor = 0; neighbor < g.V(); ++neighbor) {
             int weight = g.getEdgeWeight(v, neighbor);
             if (weight != 0) {
 
@@ -65,7 +65,7 @@ namespace ariel {
                 }
                 // If the neighbor is already in the path, a cycle is found
                 bool inPath = false;
-                for (int i: path) {
+                for (size_t i: path) {
                     if (i == neighbor) {
                         inPath = true;
                         break;
@@ -88,11 +88,11 @@ namespace ariel {
 
 
     // Constructs a string representation of the detected cycle.
-    std::string DetectCycle::constructCycleString(const std::vector<int> &path) {
+    std::string DetectCycle::constructCycleString(const std::vector<size_t> &path) {
         // Construct the cycle string from the path
         std::stringstream ss;
         ss << "Cycle found: ";
-        for (int i = 0; i < path.size(); ++i) {
+        for (size_t i = 0; i < path.size(); ++i) {
             ss << path[i];
             if (i < path.size() - 1)
                 ss << "->";

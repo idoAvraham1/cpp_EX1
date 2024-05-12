@@ -55,7 +55,7 @@ namespace ariel {
         dist[source] = 0;
         // create a priority que to store the distance from source of each vertex
         std::priority_queue<std::pair<int, size_t>, std::vector<std::pair<int, size_t>>,
-                std::greater<>> pq;
+                    std::greater<std::pair<int, size_t>>> pq;
         // insert source vertex with distance 0 to the pq
         pq.emplace(0, source);
 

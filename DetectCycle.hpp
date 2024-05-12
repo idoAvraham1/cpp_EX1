@@ -14,8 +14,8 @@ namespace ariel {
         static std::string Execute(const Graph &g);
     private:
         static std::string detectCycle(const Graph& g);
-        static bool detectCycleDfs(const Graph &g, int v,int parent, std::vector<bool> &visited, std::vector<int> &path);
-        static std::string constructCycleString(const std::vector<int> &path);
+        static bool detectCycleDfs(const Graph &g, size_t v,int parent, std::vector<bool> &visited, std::vector<size_t> &path);
+        static std::string constructCycleString(const std::vector<size_t> &path);
     };
 
 }
